@@ -1,0 +1,17 @@
+{
+  "content": {
+    "id": 1,
+    "firstName": "Jean",
+    "lastName": "Dupont",
+    "email": "jean.dupont@example.com",
+    "address": {
+      "id": 1,
+      "streetNumber": 123,
+      "streetName": "Rue de la Paix",
+      "suburb": "Quartier des affaires",
+      "postcode": "75002",
+      "city": "Paris",
+      "state": "Île-de-France"
+    }
+  }
+}
