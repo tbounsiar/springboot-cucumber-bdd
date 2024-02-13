@@ -26,6 +26,9 @@ jobs:
       - name: Run Clean Test
         run: mvn clean test
 
+      - name: Build Native Image
+        run: mvn -Pnative spring-boot:build-image -DREGISTRY_URL="${{ vars.REGISTRY_URL }}" -DskipTests
+
       - name: Docker Login
         uses: docker/login-action@v3
         with:
@@ -33,11 +36,5 @@ jobs:
           username: ${{ secrets.REGISTRY_USER }}
           password: ${{ secrets.REGISTRY_TOKEN }}
 
-      - name: Build Native Image
-        run: mvn -Pnative spring-boot:build-image -DREGISTRY_URL="${{ vars.REGISTRY_URL }}" -DskipTests
-
       - name: Docker Push image
-        uses: docker/build-push-action@v5
-        with:
-          push: true
-          tags: ${{ vars.REGISTRY_URL }}/springboot-cucumber-bdd:0.0.1-SNAPSHOT
+        run: docker push ${{ vars.REGISTRY_URL }}/springboot-cucumber-bdd:0.0.1-SNAPSHOT
