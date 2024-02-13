@@ -29,15 +29,15 @@ jobs:
       - name: Docker Login
         uses: docker/login-action@v3
         with:
-          registry: ${{ env.REGISTRY_URL }}
+          registry: ${{ vars.REGISTRY_URL }}
           username: ${{ secrets.REGISTRY_USER }}
           password: ${{ secrets.REGISTRY_TOKEN }}
 
       - name: Build Native Image
-        run: mvn -Pnative spring-boot:build-image -DREGISTRY_URL=${{ env.REGISTRY_URL }}
+        run: mvn -Pnative spring-boot:build-image -DREGISTRY_URL="${{ vars.REGISTRY_URL }}" -DskipTests
 
       - name: Docker Push image
         uses: docker/build-push-action@v5
         with:
           push: true
-          tags: ${{ env.REGISTRY_URL }}/springboot-cucumber-bdd:0.0.1-SNAPSHOT
+          tags: ${{ vars.REGISTRY_URL }}/springboot-cucumber-bdd:0.0.1-SNAPSHOT
