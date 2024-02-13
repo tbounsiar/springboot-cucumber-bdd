@@ -23,8 +23,5 @@ jobs:
           distribution: 'temurin'
           cache: maven
 
-      - name: Run Clean
-        run: mvn clean
-
-      - name: Run Tests
-        run: mvn test
+      - name: Run Clean Test
+        run: mvn clean test
