@@ -43,5 +43,9 @@ jobs:
       - name: Docker Pull image
         run: docker pull ${{ vars.REGISTRY_URL }}/springboot-cucumber-bdd:0.0.1-SNAPSHOT
 
+      - name: Docker Stop Current Container
+        run: docker stop bdd-server || true
+        continue-on-error: true
+
       - name: Docker Run container
         run: docker run -d --rm --name bdd-server -p 8080:8080 ${{ vars.REGISTRY_URL }}/springboot-cucumber-bdd:0.0.1-SNAPSHOT
