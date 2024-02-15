@@ -44,8 +44,12 @@ jobs:
       - name: Docker Pull image
         run: ssh server docker pull ${{ vars.REGISTRY_URL }}/springboot-cucumber-bdd:0.0.1-SNAPSHOT
 
-      - name: Docker Stop Current Container
+      - name: Docker Stop Old Container
         run: ssh server docker stop bdd-server
+        continue-on-error: true
+
+      - name: Docker Remove Old Container
+        run: ssh server docker rm bdd-server
         continue-on-error: true
 
       - name: Docker Run container
