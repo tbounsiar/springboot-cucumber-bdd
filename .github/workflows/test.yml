@@ -9,31 +9,31 @@ on:
 
 jobs:
 
-  build:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Check out code
-        uses: actions/checkout@v3
-
-      - name: Set up JDK 17
-        uses: actions/setup-java@v3
-        with:
-          java-version: '17'
-          distribution: 'temurin'
-          cache: maven
-
-      - name: Run Clean Test Build Native Image
-        run: mvn clean -Pnative spring-boot:build-image -DREGISTRY_URL="${{ vars.REGISTRY_URL }}"
-
-      - name: Docker Login
-        run: docker login ${{ vars.REGISTRY_URL }} -u ${{ secrets.REGISTRY_USER }} -p ${{ secrets.REGISTRY_TOKEN }}
-
-      - name: Docker Push image
-        run: docker push ${{ vars.REGISTRY_URL }}/springboot-cucumber-bdd:0.0.1-SNAPSHOT
+#  build:
+#    runs-on: ubuntu-latest
+#
+#    steps:
+#      - name: Check out code
+#        uses: actions/checkout@v3
+#
+#      - name: Set up JDK 17
+#        uses: actions/setup-java@v3
+#        with:
+#          java-version: '17'
+#          distribution: 'temurin'
+#          cache: maven
+#
+#      - name: Run Clean Test Build Native Image
+#        run: mvn clean -Pnative spring-boot:build-image -DREGISTRY_URL="${{ vars.REGISTRY_URL }}"
+#
+#      - name: Docker Login
+#        run: docker login ${{ vars.REGISTRY_URL }} -u ${{ secrets.REGISTRY_USER }} -p ${{ secrets.REGISTRY_TOKEN }}
+#
+#      - name: Docker Push image
+#        run: docker push ${{ vars.REGISTRY_URL }}/springboot-cucumber-bdd:0.0.1-SNAPSHOT
 
   deploy:
-    needs: build
+#    needs: build
     runs-on: 'ubuntu-vm'
 
     steps:
@@ -49,4 +49,4 @@ jobs:
         continue-on-error: true
 
       - name: Docker Run container
-        run: ssh server docker run -d --rm --name bdd-server -p 80:8080 ${{ vars.REGISTRY_URL }}/springboot-cucumber-bdd:0.0.1-SNAPSHOT
+        run: ssh server docker run -d --rm --restart unless-stopped --name bdd-server -p 80:8080 ${{ vars.REGISTRY_URL }}/springboot-cucumber-bdd:0.0.1-SNAPSHOT
