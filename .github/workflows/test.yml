@@ -49,4 +49,4 @@ jobs:
         continue-on-error: true
 
       - name: Docker Run container
-        run: ssh server docker run -d --rm --restart unless-stopped --name bdd-server -p 80:8080 ${{ vars.REGISTRY_URL }}/springboot-cucumber-bdd:0.0.1-SNAPSHOT
+        run: ssh server docker run -d --restart unless-stopped --name bdd-server -p 80:8080 ${{ vars.REGISTRY_URL }}/springboot-cucumber-bdd:0.0.1-SNAPSHOT
